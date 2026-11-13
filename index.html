@@ -4,24 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maicon Oliveira - Back-End Developer</title>
-    <link rel="stylesheet" href="portfolio.css">
+    <link rel="stylesheet" href="portfolio.css?v=30">
+    <link rel="stylesheet" href="editorial.css?v=30">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/devicon/2.16.0/devicon.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        // A introdução só existe com JS e sem "reduzir movimento"; se algo falhar, ela se remove sozinha.
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.documentElement.classList.add('has-intro');
+            setTimeout(function () {
+                if (window.__introDone) return;
+                window.__introDone = true;
+                document.documentElement.classList.remove('has-intro');
+                window.dispatchEvent(new Event('intro:reveal'));
+                window.dispatchEvent(new Event('intro:docked'));
+            }, 24000);
+        }
+    </script>
 </head>
 <body>
+    <div id="curtain" aria-hidden="true">
+        <div class="curtain-cols"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="curtain-label"></div>
+        <div class="intro-body">
+            <div class="intro-meta">
+                <div class="intro-foot">
+                    <span class="intro-name">Oliver.dev</span>
+                    <span class="intro-pct">0%</span>
+                </div>
+                <div class="intro-bar"><i></i></div>
+            </div>
+        </div>
+    </div>
     <nav class="navbar">
         <div class="nav-container">
-            <a href="#home" class="nav-logo" style="font-family: 'JetBrains Mono', monospace; font-size: xx-large; position: absolute; left: 260px;">Oliver.dev</a>
-            <div class="nav-menu" id="nav-menu" style="position: absolute; top: 35px; left: 1130px; width: 100%; z-index: 1000; font-size: large;">
-                <a href="#home" class="nav-link" style="font-family: 'JetBrains Mono', monospace;">Home</a>
-                <a href="#about" class="nav-link" style="font-family: JetBrains Mono', monospace;">About</a>
-                <a href="#skills" class="nav-link" style="font-family: JetBrains Mono', monospace;">Skills</a>
-                <a href="#experience" class="nav-link" style="font-family: JetBrains Mono', monospace;">Experience</a>
-                <a href="#projects" class="nav-link" style="font-family: JetBrains Mono', monospace;">Projects</a>
-                <a href="#contact" class="nav-link" style="font-family: JetBrains Mono', monospace;">Contact</a>
+            <a href="#home" class="nav-logo">OLIVER<span>.</span>DEV</a>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link"><span class="seg"><span class="seg-label">Home</span></span></a>
+                <a href="#about" class="nav-link"><span class="seg"><span class="seg-label">About</span></span></a>
+                <a href="#skills" class="nav-link"><span class="seg"><span class="seg-label">Skills</span></span></a>
+                <a href="#experience" class="nav-link"><span class="seg"><span class="seg-label">Experience</span></span></a>
+                <a href="#projects" class="nav-link"><span class="seg"><span class="seg-label">Projects</span></span></a>
+                <a href="#contact" class="nav-link"><span class="seg"><span class="seg-label">Contact</span></span></a>
             </div>  
-            <button class="theme-toggle" id="theme-toggle" style="position: absolute; top: 27px; right: 50px; z-index: 1001; pointer-events: auto;">
+            <a href="#contact" class="nav-cta">Let's talk <i class="fas fa-arrow-up-right-from-square"></i></a>
+            <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Switch language to Portuguese"><span data-l="en" class="on">EN</span><span data-l="pt">PT</span></button>
+            <button class="theme-toggle" id="theme-toggle">
                 <i class="fas fa-moon"></i>
             </button>
             <div class="nav-toggle" id="nav-toggle">
@@ -34,48 +65,75 @@
 
     <section id="home" class="hero">
         <div class="hero-bg"></div>
-        <div class="container">
-            <div class="hero-layout">
-                <div class="hero-content">
-                    <h1>Maicon Oliveira</h1>
-                    <h2>Dev Back-End / AI Builder</h2>
-                 <div class="hero-buttons" style="position: relative; z-index: 10;">
-                    <a href="#contact" class="btn btn-primary" style="pointer-events: auto; position: relative; z-index: 11;">Contact me</a>
-                    <a href="#projects" class="btn btn-primary" style="pointer-events: auto; position: relative; z-index: 11;">View Projects</a>
-                    <a href="https://www.dio.me/certificate/2POYIGPU/share" target="_blank" class="btn btn-secondary" style="pointer-events: auto; position: relative; z-index: 11;">
-                        <i class="fas fa-cloud" ></i> Java Cloud Certified
-                    </a>
+        <div class="hero-giant hero-art" aria-hidden="true"><span>
+            <b class="art-ring r1"></b><b class="art-ring r2"></b>
+            <i class="art-i" style="left:6%;top:14%;--s:118;--dp:16;--fd:7s;--dl:0s"><svg viewBox="0 0 64 64"><path pathLength="1" d="M22 18L8 32l14 14M42 18l14 14-14 14M37 12L27 52"/></svg></i>
+            <i class="art-i" style="left:26%;top:5%;--s:100;--dp:10;--fd:8s;--dl:0.15s"><svg viewBox="0 0 64 64"><rect pathLength="1" x="6" y="10" width="52" height="44" rx="6"/><path pathLength="1" d="M16 24l10 8-10 8M32 42h14"/></svg></i>
+            <i class="art-i" style="left:3%;top:60%;--s:96;--dp:22;--fd:9s;--dl:0.3s"><svg viewBox="0 0 64 64"><rect pathLength="1" x="10" y="10" width="44" height="16" rx="4"/><rect pathLength="1" x="10" y="38" width="44" height="16" rx="4"/><circle pathLength="1" cx="19" cy="18" r="1.5"/><circle pathLength="1" cx="19" cy="46" r="1.5"/><path pathLength="1" d="M30 18h16M30 46h16"/></svg></i>
+            <i class="art-i" style="left:18%;top:72%;--s:124;--dp:12;--fd:10s;--dl:0.45s"><svg viewBox="0 0 64 64"><path pathLength="1" d="M18 50h28a12 12 0 0 0 2-23.8A16 16 0 0 0 17 28a11 11 0 0 0 1 22z"/></svg></i>
+            <i class="art-i" style="left:13%;top:40%;--s:80;--dp:26;--fd:6.5s;--dl:0.6s"><svg viewBox="0 0 64 64"><path pathLength="1" d="M32 6l22 12v26L32 58 10 44V18zM10 18l22 13 22-13M32 31v27"/></svg></i>
+            <i class="art-i" style="left:58%;top:5%;--s:96;--dp:14;--fd:8.5s;--dl:0.2s"><svg viewBox="0 0 64 64"><path pathLength="1" d="M32 6l22 8v18c0 14-10 22-22 26C20 54 10 46 10 32V14z M22 32l8 8 14-16"/></svg></i>
+            <i class="art-i" style="left:69%;top:17%;--s:128;--dp:20;--fd:7.5s;--dl:0.35s"><svg viewBox="0 0 64 64"><rect pathLength="1" x="14" y="22" width="36" height="28" rx="8"/><path pathLength="1" d="M32 22V13M8 34v8M56 34v8M25 44h14"/><circle pathLength="1" cx="32" cy="10" r="3"/><circle pathLength="1" cx="25" cy="34" r="3"/><circle pathLength="1" cx="39" cy="34" r="3"/></svg></i>
+            <i class="art-i" style="left:88%;top:6%;--s:92;--dp:10;--fd:9.5s;--dl:0.5s"><svg viewBox="0 0 64 64"><ellipse pathLength="1" cx="32" cy="14" rx="20" ry="8"/><path pathLength="1" d="M12 14v36c0 4.4 9 8 20 8s20-3.6 20-8V14M12 32c0 4.4 9 8 20 8s20-3.6 20-8"/></svg></i>
+            <i class="art-i" style="left:83%;top:58%;--s:108;--dp:24;--fd:8s;--dl:0.65s"><svg viewBox="0 0 64 64"><circle pathLength="1" cx="16" cy="12" r="5"/><circle pathLength="1" cx="16" cy="52" r="5"/><circle pathLength="1" cx="48" cy="24" r="5"/><path pathLength="1" d="M16 17v30M48 29c0 12-32 6-32 18"/></svg></i>
+            <i class="art-i" style="left:60%;top:72%;--s:96;--dp:16;--fd:11s;--dl:0.8s"><svg viewBox="0 0 64 64"><circle pathLength="1" cx="32" cy="32" r="15"/><circle pathLength="1" cx="32" cy="32" r="5"/><path pathLength="1" d="M47.0 32.0L57.0 32.0"/><path pathLength="1" d="M42.6 42.6L49.7 49.7"/><path pathLength="1" d="M32.0 47.0L32.0 57.0"/><path pathLength="1" d="M21.4 42.6L14.3 49.7"/><path pathLength="1" d="M17.0 32.0L7.0 32.0"/><path pathLength="1" d="M21.4 21.4L14.3 14.3"/><path pathLength="1" d="M32.0 17.0L32.0 7.0"/><path pathLength="1" d="M42.6 21.4L49.7 14.3"/></svg></i>
+            <i class="art-i" style="left:92%;top:38%;--s:84;--dp:28;--fd:7s;--dl:0.9s"><svg viewBox="0 0 64 64"><rect pathLength="1" x="18" y="18" width="28" height="28" rx="4"/><rect pathLength="1" x="26" y="26" width="12" height="12" rx="2"/><path pathLength="1" d="M26 18V8M26 46V56"/><path pathLength="1" d="M38 18V8M38 46V56"/><path pathLength="1" d="M18 26H8M46 26H56"/><path pathLength="1" d="M18 38H8M46 38H56"/></svg></i>
+            <i class="art-i" style="left:40%;top:2%;--s:90;--dp:12;--fd:10s;--dl:1.0s"><svg viewBox="0 0 64 64"><path pathLength="1" d="M24 8c-8 0-8 6-8 12s0 10-8 12c8 2 8 6 8 12s0 12 8 12M40 8c8 0 8 6 8 12s0 10 8 12c-8 2-8 6-8 12s0 12-8 12"/></svg></i>
+        </span></div>
+        <figure class="hero-photo">
+            <img src="perfil.png?v=3" alt="Maicon Oliveira" width="760" height="700">
+            <canvas class="photo-build" aria-hidden="true"></canvas>
+        </figure>
+        <div class="container hero-grid">
+            <div class="hero-left hero-content">
+                <p class="eyebrow"><b>Software developer</b> Back-End &middot; AI agents</p>
+                <p class="hero-hello">Hi, I'm</p>
+                <h1>Maicon<br>Oliveira<i>.</i></h1>
+                <h2>Software Development / AI Builder</h2>
+                <p class="hero-lead">Always working on application development, AI agents and automated flows, choosing the best decision for the system architecture!</p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">View projects <i class="fas fa-arrow-down"></i></a>
+                    <a href="#contact" class="btn btn-ghost">Contact me</a>
+                    <a href="https://www.dio.me/certificate/2POYIGPU/share" target="_blank" class="btn btn-ghost"><i class="fas fa-cloud"></i> Java Cloud Certified</a>
                 </div>
-                </div>
-                <div class="hero-image">
-                    <img src="Perfil.jpg" alt="Maicon Oliveira" class="profile-photo">
-                    <div class="code-monitor">
-                        <div class="monitor-frame">
-                            <div class="monitor-header">
-                                <div class="monitor-buttons">
-                                    <span class="btn-close"></span>
-                                    <span class="btn-minimize"></span>
-                                    <span class="btn-maximize"></span>
+            </div>
+            <div class="hero-right">
+                        <div class="monitor-slot">
+                            <div class="code-monitor">
+                                <div class="monitor-frame">
+                                    <div class="monitor-header">
+                                        <div class="monitor-buttons">
+                                            <span class="btn-close"></span>
+                                            <span class="btn-minimize"></span>
+                                            <span class="btn-maximize"></span>
+                                        </div>
+                                        <div class="monitor-title"></div>
+                                        <div></div>
+                                    </div>
+                                    <div class="monitor-screen">
+                                        <div class="code-content" id="code-content"></div>
+                                    </div>
                                 </div>
-                                <div class="monitor-title"></div>
-                                <div></div>
                             </div>
-                            <div class="monitor-screen">
-                                <div class="code-content" id="code-content"></div>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                <ul class="hero-stats">
+                    <li><b data-count="#skills .marquee-set:first-child i">0</b><span>Technologies<br>in the stack</span></li>
+                    <li><b data-count="#projects .project-card">0</b><span>Projects<br>on GitHub</span></li>
+                    <li><b data-count="#experience .course-item">0</b><span>Complementary<br>courses</span></li>
+                </ul>
             </div>
         </div>
     </section>
 
     <section id="about" class="about">
         <div class="container">
-            <h2 class="section-title">About <span class="gradient-text">Me</span></h2>
+            <div class="sec-head">
+                <p class="eyebrow">01 / Behind the code</p>
+                <h2 class="section-title" data-i18n="about">More than code.<br>Systems that <span class="gradient-text">work.</span></h2>
+            </div>
             <div class="about-content">
                 <div class="about-topics">
-                    <div class="topic-item" style="top: 0; left: 100;">
+                    <div class="topic-item">
                         <i class="fas fa-user-tie"></i>
                         <h3>Professional Profile</h3>
                         <ul>
@@ -84,25 +142,28 @@
                             <li>Creating AI Agents with intelligent flow for autonomous decision making</li>
                         </ul>
                     </div>
-                    <div class="topic-item" style="bottom: 0; right: 200px;">
+                    <div class="topic-item">
                         <i class="fas fa-code"></i>
                         <h3>Technical Specialization</h3>
                         <ul>
-                            <li>Focus on building <strong>RESTful APIs</strong></li>
-                            <li>Experience with <strong>Java, Kotlin</strong> and <strong>Spring</strong> ecosystem</li>
-                            <li>Expertise in Spring Boot, Web and Security</li>
+                            <li data-i18n="t-arch">Focus on <strong>architecture analysis</strong> and <strong>decision making</strong></li>
+                            <li data-i18n="t-flow">Implementation of <strong>automated flows</strong> and <strong>AI agents</strong> trained to execute operations</li>
+                            <li data-i18n="t-test">Development best practices driven by <strong>tests</strong></li>
                         </ul>
                     </div>
-                    <div class="topic-item" style="bottom: -420px; left: 260px;">
+                    <div class="topic-item">
                         <i class="fab fa-docker"></i>
                         <h3>DevOps</h3>
                         <ul>
-                            <li>Knowledge in <strong>Docker</strong> and docker-compose</li>
+                            <li data-i18n="li-docker">Knowledge in <strong>Docker</strong> and docker-compose</li>
                             <li>Creating images for personal projects</li>
                             <li>Publishing on DockerHub</li>
+                            <li data-i18n="d-graf">Application monitoring with <strong>Grafana</strong></li>
+                            <li data-i18n="d-iac">Implementation of <strong>infrastructure as code (IaC)</strong>, such as <strong>Terraform</strong></li>
+                            <li data-i18n="d-cicd"><strong>CI/CD</strong> with code versioning in <strong>Git</strong> and workflow management with <strong>GitWorkflow</strong></li>
                         </ul>
                     </div>
-                    <div class="topic-item" style="bottom: 0; right: 1100px; width: 310px; height: 390px;">
+                    <div class="topic-item">
                         <i class="fas fa-chart-line"></i>
                         <h3>Professional Growth</h3>
                         <ul>
@@ -118,87 +179,68 @@
 
     <section id="skills" class="skills">
         <div class="container">
-            <h2 class="section-title"><span class="gradient-text">Skills</span></h2>
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <i class="fab fa-java"></i>
-                    <h3>Java</h3>
-                </div>
-                <div class="skill-card">
-                    <i class="fab fa-python"></i>
-                    <h3>Python</h3>
-                </div>
-                <div class="skill-card">
-                    <i class="fas fa-leaf"></i>
-                    <h3>Spring Boot</h3>
-                </div>
-                <div class="skill-card">
+            <div class="sec-head">
+                <p class="eyebrow">02 / Tools &amp; stack</p>
+                <h2 class="section-title" data-i18n="skills">The stack behind<br>every <span class="gradient-text">project.</span></h2>
+            </div>
+            <div class="marquee" aria-label="Skills">
+                <div class="marquee-track">
+                    <div class="marquee-set">
+                    <i class="devicon-java-plain" title="Java" aria-label="Java"></i>
+                    <i class="devicon-python-plain" title="Python" aria-label="Python"></i>
+                    <i class="devicon-go-plain" title="Golang" aria-label="Golang"></i>
+                    <i class="devicon-spring-plain" title="Spring Boot" aria-label="Spring Boot"></i>
+                    <i class="fas fa-shield-alt" title="Spring Security" aria-label="Spring Security"></i>
+                    <i class="devicon-maven-plain" title="Maven" aria-label="Maven"></i>
+                    <i class="fas fa-server" title="APIs RESTful" aria-label="APIs RESTful"></i>
+                    <i class="fas fa-cubes" title="Microservices" aria-label="Microservices"></i>
+                    <i class="fas fa-robot" title="AI Agents" aria-label="AI Agents"></i>
+                    <i class="icon-n8n" title="N8N" aria-label="N8N"></i>
+                    <i class="fas fa-brain" title="GenAI" aria-label="GenAI"></i>
+                    <i class="fas fa-microchip" title="AI Chip" aria-label="AI Chip"></i>
+                    <i class="devicon-postgresql-plain" title="PostgreSQL" aria-label="PostgreSQL"></i>
+                    <i class="devicon-mysql-plain" title="MySQL" aria-label="MySQL"></i>
+                    <i class="devicon-mongodb-plain" title="MongoDB" aria-label="MongoDB"></i>
+                    <i class="devicon-apachekafka-plain" title="Apache Kafka" aria-label="Apache Kafka"></i>
+                    <i class="devicon-docker-plain" title="Docker" aria-label="Docker"></i>
+                    <i class="devicon-amazonwebservices-plain" title="AWS" aria-label="AWS"></i>
+                    <i class="devicon-git-plain" title="Git" aria-label="Git"></i>
+                    <i class="devicon-github-plain" title="GitHub" aria-label="GitHub"></i>
+                    <i class="devicon-githubactions-plain" title="CI/CD" aria-label="CI/CD"></i>
+                    <i class="fas fa-cloud" title="Cloud" aria-label="Cloud"></i>
+                    <i class="devicon-terraform-plain" title="Terraform" aria-label="Terraform"></i>
+                    <i class="devicon-linux-plain" title="Linux" aria-label="Linux"></i>
+                    <i class="devicon-grafana-plain" title="Grafana" aria-label="Grafana"></i>
+                    <i class="fas fa-gauge-high" title="Dashboards" aria-label="Dashboards"></i>
+                    </div>
+                    <div class="marquee-set" aria-hidden="true">
+                    <i class="devicon-java-plain"></i>
+                    <i class="devicon-python-plain"></i>
+                    <i class="devicon-go-plain"></i>
+                    <i class="devicon-spring-plain"></i>
                     <i class="fas fa-shield-alt"></i>
-                    <h3>Spring Security</h3>
-                </div>
-                <div class="skill-card">
-                    <i class="fas fa-database"></i>
-                    <h3>PostgreSQL</h3>
-                </div>
-                <div class="skill-card">
-                    <i class="fas fa-database"></i>
-                    <h3>MySQL</h3>
-                </div>
-                <div class="skill-card">
-                    <i class="fab fa-docker"></i>
-                    <h3>Docker</h3>
-                </div>
-                <div class="skill-card">
-                    <i class="fab fa-aws"></i>
-                    <h3>AWS</h3>
-                </div>
-                <div class="skill-card">
-                    <i class="fab fa-git-alt"></i>
-                    <h3>Git</h3>
-                </div>
-                <div class="skill-card">
-                    <i class="fab fa-github"></i>
-                    <h3>GitHub</h3>
-                </div>
-                <div class="skill-card">
+                    <i class="devicon-maven-plain"></i>
                     <i class="fas fa-server"></i>
-                    <h3>APIs RESTful</h3>
-                </div>
-                <div class="skill-card">
                     <i class="fas fa-cubes"></i>
-                    <h3>Microservices</h3>
-                </div>
-                <div class="skill-card">
-                    <i class="fas fa-infinity"></i>
-                    <h3>CI/CD</h3>
-                </div>
-                <div class="skill-card">
-                    <i class="fas fa-cloud"></i>
-                    <h3>Cloud</h3>
-                </div>
-                <div class="skill-card">
                     <i class="fas fa-robot"></i>
-                    <h3>N8N</h3>
-                </div>
-                <div class="skill-card">
+                    <i class="icon-n8n"></i>
                     <i class="fas fa-brain"></i>
-                    <h3>GenAI</h3>
-                </div>
-                <div class="skill-card">
-                    <i class="fas fa-database"></i>
-                    <h3>MongoDB</h3>
-                </div>
-                <div class="skill-card">
-                    <i class="fas fa-envelope"></i>
-                    <h3>Apache Kafka</h3>
-                </div>
-                <div class="skill-card">
-                    <i class="fas fa-code"></i>
-                    <h3>Maven</h3>
-                </div>
-                <div class="skill-card">
-                    <i class="fas fa-layer-group"></i>
-                    <h3>Terraform</h3>
+                    <i class="fas fa-microchip"></i>
+                    <i class="devicon-postgresql-plain"></i>
+                    <i class="devicon-mysql-plain"></i>
+                    <i class="devicon-mongodb-plain"></i>
+                    <i class="devicon-apachekafka-plain"></i>
+                    <i class="devicon-docker-plain"></i>
+                    <i class="devicon-amazonwebservices-plain"></i>
+                    <i class="devicon-git-plain"></i>
+                    <i class="devicon-github-plain"></i>
+                    <i class="devicon-githubactions-plain"></i>
+                    <i class="fas fa-cloud"></i>
+                    <i class="devicon-terraform-plain"></i>
+                    <i class="devicon-linux-plain"></i>
+                    <i class="devicon-grafana-plain"></i>
+                    <i class="fas fa-gauge-high"></i>
+                                        </div>
                 </div>
             </div>
         </div>
@@ -206,8 +248,44 @@
 
     <section id="experience" class="experience">
         <div class="container">
-            <h2 class="section-title">Work & <span class="gradient-text">Experience</span></h2>
+            <div class="sec-head">
+                <p class="eyebrow">03 / Path</p>
+                <h2 class="section-title" data-i18n="exp">Always building.<br>Always <span class="gradient-text">learning.</span></h2>
+            </div>
             <div class="experience-content">
+                <div class="experience-card">
+                    <div class="experience-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div class="experience-info">
+                        <h3>IT Assistant (Intern)</h3>
+                        <h4>GRANISTONE A ROCHA</h4>
+                        <p class="experience-date">July 2026 - Present</p>
+                        <ul>
+                            <li>Using the GLPI tool to support level 1 help desk tickets</li>
+                            <li>Automations in Python and N8N for recurring processes between departments</li>
+                            <li>Using the Wiki tool to write process documentation for the IT department</li>
+                            <li>Remote support using MeshCentral</li>
+                            <li>Building dashboards and charts for monthly and yearly reports in Grafana</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="experience-card">
+                    <div class="experience-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <div class="experience-info">
+                        <h3>Systems Analyst (Temporary)</h3>
+                        <h4>QS Promo Merchandising</h4>
+                        <p class="experience-date">April 2026 - June 2026</p>
+                        <ul>
+                            <li>Developing Python automation for Excel reports</li>
+                            <li>Developing Web Scraping routines in Python to collect data from outsourced systems</li>
+                            <li>Supporting the automation of repetitive processes built in Python</li>
+                            <li>Analysis of logs and events inside the Puzzle system</li>
+                        </ul>
+                    </div>
+                </div>
                 <div class="experience-card">
                     <div class="experience-icon">
                         <i class="fas fa-briefcase"></i>
@@ -260,9 +338,23 @@
 
     <section id="projects" class="projects">
         <div class="container">
-            <h2 class="section-title">My <span class="gradient-text">Projects</span></h2>
+            <div class="sec-head sec-head-row">
+                <div>
+                    <p class="eyebrow">04 / Selected projects</p>
+                    <h2 class="section-title" data-i18n="proj">Work that<br>runs <span class="gradient-text">on its own.</span></h2>
+                </div>
+                <a class="head-link" href="https://github.com/MOliveiraDev" target="_blank">All projects <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="proj-filters" role="tablist">
+                <button class="is-on" data-filter="all" role="tab">All</button>
+                <button data-filter="backend" role="tab">Back-End</button>
+                <button data-filter="ai" role="tab">AI</button>
+                <button data-filter="automation" role="tab">Automation</button>
+                <button data-filter="cloud" role="tab">Cloud</button>
+                <button data-filter="security" role="tab">Security</button>
+            </div>
             <div class="projects-grid">
-                <div class="project-card">
+                <div class="project-card" data-cat="ai backend">
                     <div class="project-icon">
                         <i class="fas fa-dumbbell"></i>
                     </div>
@@ -282,7 +374,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="project-card">
+                <div class="project-card" data-cat="backend">
                     <div class="project-icon">
                         <i class="fas fa-digital-tachograph"></i>
                     </div>
@@ -300,7 +392,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="project-card">
+                <div class="project-card" data-cat="security backend">
                     <div class="project-icon">
                         <i class="fas fa-network-wired"></i>
                     </div>
@@ -318,7 +410,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="project-card">
+                <div class="project-card" data-cat="cloud backend">
                     <div class="project-icon">
                         <i class="fas fa-cubes"></i>
                     </div>
@@ -336,7 +428,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="project-card">
+                <div class="project-card" data-cat="automation ai">
                     <div class="project-icon">
                         <i class="fas fa-robot"></i>
                     </div>
@@ -355,49 +447,28 @@
 
     <section id="contact" class="contact">
         <div class="container">
-            <h2 class="section-title">Get in <span class="gradient-text">Touch</span></h2>
-            <div class="contact-content">
-                <div class="contact-info">
+            <div class="contact-grid">
+                <div class="contact-intro">
+                    <p class="eyebrow">05 / Next project</p>
+                    <h2 class="section-title" data-i18n="contact">Tell me what<br>to <span class="gradient-text">build.</span></h2>
                     <p class="contact-description">I'm available for job opportunities, freelance projects or just to talk about software development.</p>
-                    <div class="contact-items">
-                        <div class="contact-item">
-                            <i class="fas fa-envelope"></i>
-                            <div>
-                                <strong>E-mail</strong>
-                                <a href="mailto:oliveiramaicon16637@gmail.com">oliveiramaicon16637@gmail.com</a>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fab fa-whatsapp"></i>
-                            <div>
-                                <strong>WhatsApp</strong>
-                                <a href="https://wa.me/5585994518881" target="_blank">(85) 9 9451-8881</a>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fab fa-github"></i>
-                            <div>
-                                <strong>GitHub</strong>
-                                <a href="https://github.com/MOliveiraDev" target="_blank">MOliveiraDev</a>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fab fa-linkedin"></i>
-                            <div>
-                                <strong>LinkedIn</strong>
-                                <a href="https://www.linkedin.com/in/maicon-oliveira-32917b309/" target="_blank">maicon-oliveira</a>
-                            </div>
-                        </div>
-                    </div>
                     <div class="contact-buttons">
-                        <a href="mailto:oliveiramaicon16637@gmail.com" class="btn btn-primary">
-                            <i class="fas fa-envelope"></i> Send Email
-                        </a>
-                        <a href="https://wa.me/5585994518881" target="_blank" class="btn btn-secondary">
-                            <i class="fab fa-whatsapp"></i> WhatsApp
-                        </a>
+                        <a href="mailto:oliveiramaicon16637@gmail.com" class="btn btn-primary"><i class="fas fa-envelope"></i> Send email</a>
+                        <a href="https://wa.me/5585994518881" target="_blank" class="btn btn-ghost"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                     </div>
                 </div>
+                <div class="contact-items">
+                    <a class="contact-item" href="mailto:oliveiramaicon16637@gmail.com"><i class="fas fa-envelope"></i><div><strong>E-mail</strong><span>oliveiramaicon16637@gmail.com</span></div><em>&nearr;</em></a>
+                    <a class="contact-item" href="https://wa.me/5585994518881" target="_blank"><i class="fab fa-whatsapp"></i><div><strong>WhatsApp</strong><span>(85) 9 9451-8881</span></div><em>&nearr;</em></a>
+                    <a class="contact-item" href="https://github.com/MOliveiraDev" target="_blank"><i class="fab fa-github"></i><div><strong>GitHub</strong><span>MOliveiraDev</span></div><em>&nearr;</em></a>
+                    <a class="contact-item" href="https://www.linkedin.com/in/maicon-oliveira-32917b309/" target="_blank"><i class="fab fa-linkedin"></i><div><strong>LinkedIn</strong><span>maicon-oliveira</span></div><em>&nearr;</em></a>
+                </div>
+                <button class="replay-card" id="replay-card" type="button">
+                    <small>Oliver.dev <span>replay</span></small>
+                    <strong>Built<br><em>live.</em></strong>
+                    <span class="play"><i class="fas fa-rotate-right"></i></span>
+                    <small class="foot">This page &middot; built by agents</small>
+                </button>
             </div>
         </div>
     </section>
@@ -405,16 +476,25 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
+                <a href="#home" class="nav-logo">OLIVER<span>.</span>DEV</a>
+                <p>&copy; 2025 Maicon Oliveira</p>
                 <div class="footer-social">
-                    <a href="https://github.com/MOliveiraDev" target="_blank"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/maicon-oliveira-32917b309/" target="_blank"><i class="fab fa-linkedin"></i></a>
-                    <a href="mailto:oliveiramaicon16637@gmail.com"><i class="fas fa-envelope"></i></a>
+                    <a href="https://github.com/MOliveiraDev" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/maicon-oliveira-32917b309/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:oliveiramaicon16637@gmail.com" aria-label="E-mail"><i class="fas fa-envelope"></i></a>
                 </div>
-                <p>&copy; 2025 Maicon Oliveira </p>
             </div>
         </div>
     </footer>
 
-    <script src="portfolio.js"></script>
+    <script src="i18n.js?v=30"></script>
+    <script src="nav-segmented.js?v=30"></script>
+    <script src="photo-build.js?v=30"></script>
+    <script src="dotgrid.js?v=30"></script>
+    <script src="transitions.js?v=30"></script>
+    <script src="portfolio.js?v=30"></script>
+    <script src="scroll-fx.js?v=30"></script>
+    <script src="hero-art.js?v=30"></script>
+    <script src="agents.js?v=30"></script>
 </body>
 </html>

@@ -43,51 +43,20 @@ document.querySelectorAll('.nav-link').forEach(link => {
     });
 });
 
-// Smooth scrolling for navigation links
+// Navegação entre seções: cortina de transição (transitions.js) ou rolagem suave
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
+        if (!target) return;
+        if (window.pageWipe) window.pageWipe(target);
+        else target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 });
 
 // Removed active navigation link highlighting on scroll
 // Now only hover effects will work
 
-// Scroll animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, observerOptions);
-
-// Initialize scroll animations
-document.addEventListener('DOMContentLoaded', () => {
-    const animatedElements = document.querySelectorAll(
-        '.topic-item, .highlight-card, .skill-card, .experience-card, .project-card, .contact-item'
-    );
-    
-    animatedElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
-    });
-});
 
 
 
@@ -97,7 +66,7 @@ window.addEventListener('scroll', () => {
     const scrollTopBtn = document.getElementById('scroll-top');
     
     if (window.scrollY > 50) {
-        navbar.style.background = 'rgba(26, 26, 46, 0.95)';
+        navbar.style.background = 'color-mix(in srgb, var(--bg-primary) 88%, transparent)';
         navbar.style.backdropFilter = 'blur(10px)';
         navbar.style.borderBottom = '1px solid var(--border-color)';
         scrollTopBtn.style.opacity = '1';
@@ -122,26 +91,6 @@ scrollTopBtn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// Skill cards staggered animation
-const skillsSection = document.getElementById('skills');
-const skillsObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const skillCards = entry.target.querySelectorAll('.skill-card');
-            skillCards.forEach((card, index) => {
-                setTimeout(() => {
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, index * 100);
-            });
-            skillsObserver.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.2 });
-
-if (skillsSection) {
-    skillsObserver.observe(skillsSection);
-}
 
 // Code typing animation - Multiple Java examples
 const codeExamples = [
@@ -341,16 +290,12 @@ function typeCode() {
     typeLine();
 }
 
-// Add loading animation
-window.addEventListener('load', () => {
-    document.body.style.opacity = '0';
-    document.body.style.transition = 'opacity 0.5s ease';
-    
-    setTimeout(() => {
-        document.body.style.opacity = '1';
-        typeCode();
-    }, 1000);
-});
+// O código do monitor começa a ser digitado quando a introdução abre
+if (document.documentElement.classList.contains('has-intro') && !window.__introDone) {
+    window.addEventListener('intro:docked', () => setTimeout(typeCode, 300), { once: true });
+} else {
+    window.addEventListener('load', typeCode);
+}
 
 // Parallax effect for hero background
 window.addEventListener('scroll', () => {
@@ -364,7 +309,7 @@ window.addEventListener('scroll', () => {
 // Add hover effects to project cards
 document.querySelectorAll('.project-card').forEach(card => {
     card.addEventListener('mouseenter', () => {
-        card.style.boxShadow = '0 20px 40px rgba(0, 212, 255, 0.2)';
+        card.style.boxShadow = '0 20px 40px rgba(229, 38, 47, 0.2)';
     });
     
     card.addEventListener('mouseleave', () => {
@@ -435,13 +380,13 @@ style.textContent = `
         visibility: hidden;
         transition: all 0.3s ease;
         z-index: 1000;
-        box-shadow: 0 4px 12px rgba(0, 212, 255, 0.3);
+        box-shadow: 0 4px 12px rgba(229, 38, 47, 0.3);
     }
     
     #scroll-top:hover {
         background: var(--accent-secondary);
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+        box-shadow: 0 6px 20px rgba(229, 38, 47, 0.4);
     }
 `;
-document.head.appendChild(style);peCode();
+document.head.appendChild(style);
