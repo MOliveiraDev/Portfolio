@@ -517,7 +517,7 @@ html.has-intro .hud { opacity: 0; transform: translate(-50%, 20px); }
     .hero { display: block; padding: 96px 0 56px; }
     .art-i { --k: 0.7; }
     .art-ring.r1 { width: 80vw; } .art-ring.r2 { width: 120vw; }
-    .hero-photo { position: relative; width: min(78vw, 460px); margin: 0 auto 0.5rem; }
+    .hero-photo { position: relative; bottom: auto; width: min(78vw, 460px); margin: clamp(1rem, 5vw, 2rem) auto 0.5rem; }
     .hero-grid { grid-template-columns: 1fr; gap: 1.5rem; }
     .hero-left, .hero-right { grid-column: 1; }
     .hero-left { text-align: center; display: flex; flex-direction: column; align-items: center; }
