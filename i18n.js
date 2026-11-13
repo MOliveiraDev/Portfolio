@@ -29,7 +29,7 @@
         'Constant search for new technologies': 'Busca constante por novas tecnologias',
         'Continuous learning of modern methodologies': 'Aprendizado contínuo de metodologias modernas',
         'Goal to become a more complete and efficient developer': 'Objetivo de me tornar um desenvolvedor mais completo e eficiente',
-        'IT Assistant (Intern)': 'Auxiliar de TI (Estagiário)',
+        'IT Assistant (Apprentice)': 'Auxiliar de TI (Aprendiz)',
         'July 2026 - Present': 'Julho de 2026 - Atual',
         'Using the GLPI tool to support level 1 help desk tickets': 'Uso da ferramenta GLPI para auxiliar no suporte de chamados N1',
         'Automations in Python and N8N for recurring processes between departments': 'Automações em Python e N8N para processos constantes entre os setores',
@@ -95,8 +95,8 @@
     const TITLE = { en: document.title, pt: 'Maicon Oliveira - Desenvolvedor Back-End' };
     const SKIP = 'script,style,#curtain,#agents,.code-monitor,#bp-doc,.photo-sparks,[data-i18n]';
 
-    let lang = 'en';
-    try { lang = localStorage.getItem('lang') === 'pt' ? 'pt' : 'en'; } catch (e) {}
+    let lang = 'pt';
+    try { lang = localStorage.getItem('lang') === 'en' ? 'en' : 'pt'; } catch (e) {}
     const orig = new WeakMap();
     const enHtml = new Map();
     document.querySelectorAll('[data-i18n]').forEach((el) => enHtml.set(el, el.innerHTML));
