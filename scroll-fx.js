@@ -66,7 +66,23 @@
         });
     }
     // ao navegar por uma aba, a seção de destino é "desconstruída" e os agentes a constroem de novo
+    // seção "visitada" = o usuário ficou nela de verdade; só as ainda não visitadas são reconstruídas ao clicar na aba
+    const visited = new Set();
+    const secs = ['home', 'about', 'skills', 'experience', 'projects', 'contact'].map((id) => document.getElementById(id)).filter(Boolean);
+    let curSec = null, dwell = 0;
+    const checkCurrent = () => {
+        let cur = secs[0];
+        secs.forEach((sc) => { if (sc.getBoundingClientRect().top <= innerHeight * 0.45) cur = sc; });
+        if (cur !== curSec) {
+            curSec = cur; clearTimeout(dwell);
+            dwell = setTimeout(() => { if (!window.__wiping && curSec === cur) visited.add(cur.id); }, 1200);
+        }
+    };
+    window.addEventListener('scroll', checkCurrent, { passive: true });
+    window.addEventListener('wipe:end', () => { checkCurrent(); });
     window.__resetReveal = (section) => {
+        if (visited.has(section.id)) return;     // já foi vista: não constrói de novo
+        visited.add(section.id);
         targets.forEach((el) => {
             if (!section.contains(el)) return;
             el._t = (el._t || 0) + 1;

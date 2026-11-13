@@ -100,7 +100,7 @@
         const W = window.innerWidth, H = window.innerHeight;
         const start = [[-40, Math.random() * H], [W + 40, Math.random() * H], [Math.random() * W, -40], [Math.random() * W, H + 40]][side];
         el.style.transform = `translate3d(${start[0]}px, ${start[1]}px, 0)`;
-        return { el, c: a.c, n: a.n, x: start[0], y: start[1], vx: 0, vy: 0, tx: W / 2, ty: H / 2, next: 0, target: null, i, live: false, manual: false };
+        return { el, c: a.c, n: a.n, x: start[0], y: start[1], vx: 0, vy: 0, tx: W / 2, ty: H / 2, next: 0, target: null, i, live: false, manual: false, parade: false, exiting: false, rot: 0, svg: el.querySelector('svg') };
     });
     document.body.appendChild(layer);
 
@@ -167,16 +167,64 @@
         }, 1500);
     };
 
+    // ---- fila indiana: quando o site termina de ser construído, os agentes se juntam e rondam o contato ----
+    let paradeOn = false, paradeDone = false, pT = 0;
+    const contactEl = document.getElementById('contact');
+    const paradePoint = (u) => {
+        const r = contactEl.getBoundingClientRect();
+        const cx = r.left + scrollX + r.width / 2, cy = r.top + scrollY + r.height / 2;
+        const A = Math.min(r.width * 0.42, 640), B = Math.min(r.height * 0.3, 200);
+        return [cx + A * Math.sin(u), cy + B * Math.sin(2 * u)];   // trajeto em "8" sobre a seção
+    };
+    const startParade = () => {
+        if (paradeOn || !contactEl) return;
+        paradeOn = true;
+        list.forEach((ag) => { if (ag.live) { ag.parade = true; ag.manual = true; } });
+        setTimeout(endParade, 20000);   // depois de 20 s a fila se desfaz
+    };
+    // cada agente sai da tela por um caminho diferente e é desligado (libera CPU e memória)
+    const exitAgent = (ag) => {
+        ag.parade = false; ag.manual = true; ag.exiting = true;
+        ag.exA = (ag.i / list.length) * Math.PI * 2 + Math.random() * 0.5;
+        ag.exW = 60 + Math.random() * 120;
+        ag.exT0 = performance.now();
+    };
+    function endParade() {
+        paradeOn = false; paradeDone = true;
+        list.forEach((ag) => { if (ag.live && ag.parade) exitAgent(ag); });
+    }
+    const deactivate = (ag) => {
+        ag.live = false; ag.exiting = false; ag.manual = false; ag.parade = false;
+        ag.vx = ag.vy = 0; ag.el.classList.remove('on');
+    };
+    // a fila começa quando a seção de contato (a última) termina de ser construída
+    setInterval(() => {
+        if (paradeOn || paradeDone || !window.__introDone || window.__wiping) return;
+        if (!root.classList.contains('fx')) return;
+        if (document.querySelector('#contact [data-reveal], #bp-doc .bp')) return;   // contato construído e nenhum agente ocupado
+        startParade();
+    }, 1000);
+
     let running = false, last = 0;
     const loop = (now) => {
         const dt = Math.min(0.05, (now - last) / 1000 || 0.016);
         last = now;
         const W = window.innerWidth, H = window.innerHeight;
         const following = now - mouse.moved < 1600;
+        if (paradeOn) pT += dt * 0.42;
         for (const ag of list) {
             if (!ag.live) continue;
             if (ag.manual) {
                 /* ordem do bash: segue o alvo definido por assign() */
+                if (ag.parade) {
+                    const [px, py] = paradePoint(pT - ag.i * 0.1);
+                    ag.tx = px; ag.ty = py;
+                } else if (ag.exiting) {
+                    const R = Math.max(W, H) * 0.95, c = Math.cos(ag.exA), sn = Math.sin(ag.exA);
+                    const wob = Math.sin((now - ag.exT0) / 260) * ag.exW;
+                    ag.tx = W / 2 + c * R - sn * wob;
+                    ag.ty = H / 2 + sn * R + c * wob + window.scrollY;
+                }
             } else if (following && ag.i < 2) {
                 ag.tx = mouse.x + (ag.i === 0 ? 46 : -34);
                 ag.ty = mouse.y + (ag.i === 0 ? 38 : 58);
@@ -186,7 +234,7 @@
                 ag.arrived = false;
             }
             // mola amortecida até o alvo (alvos manuais vivem em coordenadas da página e acompanham a rolagem)
-            const k = ag.manual ? 80 : 38, d = ag.manual ? 13 : 9;
+            const k = ag.exiting ? 9 : ag.manual ? 80 : 38, d = ag.exiting ? 4.5 : ag.manual ? 13 : 9;
             const goalY = ag.manual ? ag.ty - window.scrollY : ag.ty;
             ag.vx += ((ag.tx - ag.x) * k - ag.vx * d) * dt;
             ag.vy += ((goalY - ag.y) * k - ag.vy * d) * dt;
@@ -205,8 +253,20 @@
             }
             if (ag.hover) aim(ag.hover, ag.x, ag.y);
             ag.el.style.transform = `translate3d(${ag.x.toFixed(1)}px, ${ag.y.toFixed(1)}px, 0)`;
+            // na fila, a seta aponta para onde o agente anda
+            if (ag.exiting && (ag.x < -60 || ag.x > W + 60 || ag.y < -60 || ag.y > H + 60)) { deactivate(ag); continue; }
+            if (ag.parade || ag.exiting) {
+                if (Math.hypot(ag.vx, ag.vy) > 25) {
+                    const tgt = Math.atan2(ag.vy, ag.vx) * 180 / Math.PI + 135;
+                    ag.rot += ((((tgt - ag.rot) % 360) + 540) % 360 - 180) * 0.18;
+                    ag.svg.style.transform = `rotate(${ag.rot.toFixed(1)}deg)`;
+                }
+            } else if (ag.rot) {
+                ag.rot *= 0.8; if (Math.abs(ag.rot) < 1) ag.rot = 0;
+                ag.svg.style.transform = ag.rot ? `rotate(${ag.rot.toFixed(1)}deg)` : '';
+            }
         }
-        if (running) requestAnimationFrame(loop);
+        if (running && list.some((a) => a.live)) requestAnimationFrame(loop); else running = false;
     };
     const start = () => {
         if (running) return;
@@ -220,6 +280,7 @@
         ag.live = true;
         ag.next = 0;
         ag.el.classList.add('on');
+        start();
         window.dispatchEvent(new Event('agents:live'));
         const W = innerWidth, H = innerHeight;
         ag.tx = W * (0.15 + Math.random() * 0.7);
@@ -230,7 +291,7 @@
     const assign = (i, x, y, cap = 900) => new Promise((res) => {
         const ag = list[i % list.length];
         if (!ag.live) spawn(ag.i);
-        ag.manual = true; ag.tx = x; ag.ty = y + window.scrollY;
+        ag.manual = true; ag.parade = false; ag.exiting = false; ag.tx = x; ag.ty = y + window.scrollY;
         const t0 = performance.now();
         const poll = () => {
             if (Math.hypot(ag.tx - ag.x, vy(ag) - ag.y) < 16 || performance.now() - t0 > cap) {
@@ -244,7 +305,7 @@
     const sweep = (i, x0, y0, x1, y1, ms) => new Promise((res) => {
         const ag = list[i % list.length];
         if (!ag.live) spawn(ag.i);
-        ag.manual = true;
+        ag.manual = true; ag.parade = false; ag.exiting = false;
         const sy = window.scrollY, t0 = performance.now();
         const f = (now) => {
             const k = Math.min(1, (now - t0) / ms);
@@ -253,7 +314,7 @@
         };
         requestAnimationFrame(f);
     });
-    const release = (i) => { const ag = list[i % list.length]; ag.manual = false; ag.next = 0; };
+    const release = (i) => { const ag = list[i % list.length]; if (paradeOn) { ag.parade = true; ag.manual = true; } else if (paradeDone) exitAgent(ag); else { ag.manual = false; ag.next = 0; } };
     // camada de contornos presa à página (rola junto com o conteúdo)
     const docLayer = document.createElement('div');
     docLayer.id = 'bp-doc';
